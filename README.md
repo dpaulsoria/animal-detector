@@ -1,0 +1,3 @@
+# Animal Detector
+## Description
+Es un proyecto que permite detectar animales en una imagen, utilizando una red neuronal ...
