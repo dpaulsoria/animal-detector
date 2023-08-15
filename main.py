@@ -53,14 +53,22 @@ def init():
         label_error.config(text=f"Error: {e}")
         return
 
+description = """
+Seleccione un directorio de salida y un directorio de imágenes para analizar.
+El programa analizará todas las imágenes del directorio de imágenes y reorganizará 
+las imágenes en el directorio de salida en carpetas según si contienen o no animales.
+"""
+
 # Crear la ventana principal
 ventana = tk.Tk()
-ventana.title("Animal Detector")
+ventana.title("Detector de Animales")
 ventana.geometry(f"{width}x{height}")
 
 # Etiquetas y botones
 label_intro = tk.Label(ventana, text="Bienvenido al Detector de Animales", font=("Helvetica", 16, "bold"))
-label_intro.pack(pady=20)
+label_intro.pack(pady=10)
+label_description = tk.Label(ventana, text=description)
+label_description.pack()
 
 # Directorio de Salida
 frame_output = tk.Frame(ventana)
