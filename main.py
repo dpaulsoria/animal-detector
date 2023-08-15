@@ -1,13 +1,28 @@
 import tkinter as tk
+from tkinter import ttk
 from DirectoryHandle import get_folder, process_images
 from ReportGenerator import generate_report, log
-from ImageClassifier import classify
 
 width = 550
 height = 700
 
 output_path = None
 current_path = None
+
+mark_images = False
+
+show_options = False
+
+models_list = [
+    "AnimalDetector-v1e",
+    "Yolo-v8l",
+    "Yolo-v8m",
+    "Yolo-v8n",
+    "Yolo-v8s",
+    "Yolo-v8x"
+]
+
+selected_model = models_list[0]
 
 def buscar_dataset():
     global current_path
@@ -18,8 +33,9 @@ def select_output():
     global output_path
     output_path = get_folder()
     label_output_path.config(text=f"Path: {output_path}")
-
+    
 def init():
+    global mark_images
     if output_path is None:
         label_error.config(text="No olvide seleccionar un directorio de SALIDA para analizar!")
         return
@@ -27,11 +43,13 @@ def init():
         label_error.config(text="No olvide seleccionar un directorio para analizar!")
         return
     try:
-        report = process_images(current_path, output_path, classify)
-        generate_report(ventana, report[0], report[1], report[2], report[3])
-        log(current_path, output_path, report[0], report[1], report[2], report[3], "Éxito", "Procesamiento completado sin errores.")
+        # selected_model = combobox.get()
+        progress['value'] = 0
+        report = process_images((ventana, progress), (current_path, output_path), selected_model, mark_images)
+        generate_report(ventana, report)
+        log((current_path, output_path), report, "Éxito", "Procesamiento completado sin errores.")
     except Exception as e:
-        log(current_path, output_path, 0, 0, 0, 0, "Error", str(e))
+        log((current_path, output_path), [0, 0, 0, 0], "Error", str(e))
         label_error.config(text=f"Error: {e}")
         return
 
@@ -64,9 +82,26 @@ button_dataset.pack(side="left", padx=(5, 0))
 label_dataset_path = tk.Label(ventana, text="Path:")
 label_dataset_path.pack(fill="x", padx=20, pady=(0, 20))
 
+# # Checkbox para marcar las imágenes
+# check_mark = tk.Checkbutton(ventana, text="Marcar recuadros en Imágenes", variable=mark_images)
+# check_mark.pack()
+
+# Combobox para elegir el modelo
+# combobox = ttk.Combobox(ventana, values=models_list, state="readonly")
+# combobox.set(models_list[0])
+# combobox.pack()
+# combobox.config(state="hidden" if not show_options else "readonly")
+
+# Barra de progreso
+progress_label = tk.Label(ventana, text="Progreso actual...")
+progress_label.pack()
+progress = ttk.Progressbar(ventana, orient="horizontal", length=200, mode="determinate")
+progress.pack(padx=10, pady=10)
+
 # Botón de Procesar
 button_process = tk.Button(ventana, text="Procesar", command=init, bg="green", fg="white")
 button_process.pack(pady=20)
+
 
 # Etiqueta de Error
 label_error = tk.Label(ventana, text="", fg="red")
