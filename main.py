@@ -9,7 +9,7 @@ height = 700
 output_path = None
 current_path = None
 
-mark_images = False
+mark_images = True
 
 show_options = False
 

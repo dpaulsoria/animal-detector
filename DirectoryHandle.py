@@ -76,7 +76,12 @@ def process_images(gui, folders, selected_model, mark):
                 # No utilizamos la nueva imagen, porque classify nos devuelve
                 # una imagen 640x640 y lo que queremos es que se redistribuyan
                 # las imagenes en el directorio actual
-                collect_images(output, flag, image_path)
+                
+                
+                # collect_images(output, flag, image_path)
+                collect_images_save(output, flag, new_img, file)
+                
+                
                 # print(f"Processed: {image_path}")
                 print(f"Number of boxes: {num_boxes}")
                 num_processed += 1
@@ -94,6 +99,18 @@ def collect_images(output, flag, current_directory):
     output_path = os.path.join(output, subfolder)
     os.makedirs(output_path, exist_ok=True)  # Crea el directorio si no existe
     move_images(current_directory, output_path)
+
+def collect_images_save(output, flag, image, filename):
+    subfolder = 'Animals' if flag else "No-Animals"
+    output_path = os.path.join(output, subfolder)
+    os.makedirs(output_path, exist_ok=True)  # Crea el directorio si no existe
+    save_image(image, output_path, filename)
+
+
+def save_image(image, path, filename):
+    full_path = os.path.join(path, filename)
+    cv2.imwrite(full_path, image)
+    print("Imagen Guardada")
 
 
 def move_images(current_dir, new_dir):
