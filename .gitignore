@@ -182,6 +182,7 @@ out3/
 out4/
 img-demas especies/
 out3-demas especies/
+out5/
 
 # Models
 
@@ -190,5 +191,11 @@ out3-demas especies/
 # Logs
 
 log.txt
+
+
+# PyInstaler
+dist/
+build/
+
 
 # End of https://www.toptal.com/developers/gitignore/api/python

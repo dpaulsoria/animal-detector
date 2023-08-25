@@ -2,9 +2,11 @@ import tkinter as tk
 from tkinter import ttk
 from DirectoryHandle import get_folder, process_images
 from ReportGenerator import generate_report, log
+# import queue
+import threading
 
 width = 550
-height = 700
+height = 450
 
 output_path = None
 current_path = None
@@ -23,6 +25,27 @@ models_list = [
 ]
 
 selected_model = models_list[0]
+
+# q = queue.Queue()
+
+# def check_queue():
+    # try:
+    #     # Intenta obtener datos de la cola sin bloquear
+    #     data = q.get_nowait()
+    #     # Actualizar la GUI con los datos de la cola
+    #     if data.get('type') == 'error':
+    #         label_error.config(text=f"Error: {data.get('message')}")
+    #     # ... [Puedes agregar más condiciones aquí basadas en los datos que coloques en la cola] ...
+    # except queue.Empty:
+    #     pass
+    # # Volver a verificar la cola después de 100 ms
+    # ventana.after(100, check_queue)
+
+def init_thread():
+    thread = threading.Thread(target=init)
+    thread.start()
+    # Iniciar la comprobación de la cola en el hilo principal
+    # check_queue()
 
 def buscar_dataset():
     global current_path
@@ -46,11 +69,13 @@ def init():
         # selected_model = combobox.get()
         progress['value'] = 0
         report = process_images((ventana, progress), (current_path, output_path), selected_model, mark_images)
-        generate_report(ventana, report)
+        generate_report(report)
         log((current_path, output_path), report, "Éxito", "Procesamiento completado sin errores.")
     except Exception as e:
         log((current_path, output_path), [0, 0, 0, 0], "Error", str(e))
         label_error.config(text=f"Error: {e}")
+        # En lugar de interactuar directamente con la GUI, coloca el error en la cola
+        # q.put({'type': 'error', 'message': str(e)})
         return
 
 description = """
@@ -104,12 +129,11 @@ label_dataset_path.pack(fill="x", padx=20, pady=(0, 20))
 progress_label = tk.Label(ventana, text="Progreso actual...")
 progress_label.pack()
 progress = ttk.Progressbar(ventana, orient="horizontal", length=200, mode="determinate")
-progress.pack(padx=10, pady=10)
+progress.pack(padx=5, pady=5)
 
 # Botón de Procesar
-button_process = tk.Button(ventana, text="Procesar", command=init, bg="green", fg="white")
-button_process.pack(pady=20)
-
+button_process = tk.Button(ventana, text="Procesar", command=init_thread, bg="green", fg="white")
+button_process.pack()
 
 # Etiqueta de Error
 label_error = tk.Label(ventana, text="", fg="red")
