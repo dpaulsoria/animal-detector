@@ -1,8 +1,16 @@
 # Animal Detector
 ## Description
-Es una aplicación DEMO de escritorio desarrollada en Python 3.10.x que permite clasificar un conjunto de imágenes en imágenes con animales y sin animales. Este proyecto utiliza un modelo de Inteligencia Artificial (IA) entrenado a base de Transfer Learning utilizando como base el modelo YoloV8. Esta aplicación clasifica las imágenes con este modelo de IA y al finalizar presenta un gráfico a modo de reporte final de la duración y cantidad de imágenes clasificadas y en qué categoria cada una.
-Imagen del DEMO actual.
+Este proyecto es una aplicación de escritorio desarrollada en Python 3.10.x que permite clasificar un conjunto de imágenes en dos categorías: imágenes con animales y sin animales. La clasificación se realiza mediante el uso de un modelo de Inteligencia Artificial (IA) entrenado mediante Transfer Learning, utilizando como base el modelo YoloV8.
+
+
+## Caraterísticas
+- Clasifica imágenes utilizando un modelo de IA basado en YoloV8.
+- Proporciona un informe detallado de la duración y la cantidad de imágenes clasificadas en cada categoría.
+- Interfaz de usuario amigable.
+## Captura de Pantalla
 ![image](https://github.com/dpaulsoria/animal-detector/assets/72895299/17dde14f-ffad-4f80-8ad6-b8fa2dbdd056)
+## Cómo utilizarlo
+
 
 # Dependencias
 - Tkinter
