@@ -184,9 +184,6 @@ img-demas especies/
 out3-demas especies/
 out5/
 
-# Models
-
-*.pt
 
 # Logs
 

@@ -54,6 +54,7 @@ def update_progress_bar(num_processed, files, progress, ventana):
 def process_images(gui, folders, selected_model, mark):
     ventana, progress = gui
     directory, output = folders
+    print("PROCESS IMAGE", folders)
     # progress_bar = create_progress_bar()
     
     start_time = time.time()
